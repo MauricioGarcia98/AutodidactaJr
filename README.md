@@ -1,4 +1,4 @@
-# Nahuel García
+# Mauricio García
 
 ### Analista de Monitoreo | SQL | Python | Data Operations
 
