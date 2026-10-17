@@ -6,6 +6,7 @@ Los `.png`/`.svg` son exportaciones para el README.
 
 | archivo | contenido |
 |---|---|
+| `00_proceso_completo` | proceso completo de 6 etapas (hero animado del README: `../animations/proceso_completo.svg`) |
 | `01_arquitectura` | arquitectura end-to-end: fuentes → landing → bronze → silver → gold → consumo + orquestación + gobierno |
 | `02_linaje_tablas` | linaje tabla por tabla, marts y tablas de `ops` |
 | `03_modelo_estrella` | ERD del modelo estrella con PK/FK/medidas + constelación de facts |
@@ -27,6 +28,13 @@ y las flechas se **dibujan** (`drawProgress`).
 3. *Export* → MP4 / WebM / GIF / SVG animado.
 
 Los `.gif` del README se generan con `src/render_frames.mjs` + `src/make_gif.py` (mismo orden de pasos).
+
+### SVG animado (`../animations/proceso_completo.svg`)
+
+`src/render_animated_svg.mjs` exporta cada paso con la librería oficial de Excalidraw usando el mismo encuadre
+y los une en **un único SVG** con animaciones CSS: cada etapa aparece y sus trazos se dibujan a mano
+(`stroke-dashoffset` con `pathLength=1`). No usa JavaScript, así que GitHub lo muestra animado dentro del README,
+y respeta `prefers-reduced-motion`.
 
 ## Diagramas como código
 

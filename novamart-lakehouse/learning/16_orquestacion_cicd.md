@@ -1,7 +1,7 @@
 # Módulo 16 · Orquestación, CI/CD y operación
 
 > Este módulo es práctico sobre los archivos del repositorio: `databricks.yml`, `resources/*.yml`,
-> `.github/workflows/novamart-ci.yml` y `tests/`.
+> `.github/workflows/ci.yml` y `tests/`.
 
 ## 1. Lakeflow Jobs (ex Workflows)
 

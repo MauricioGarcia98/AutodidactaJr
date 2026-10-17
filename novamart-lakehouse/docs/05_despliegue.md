@@ -44,7 +44,7 @@ databricks bundle run novamart_e2e -t dev --params scale_factor=0.1
 
 ![CI/CD](diagrams/08_cicd.png)
 
-`.github/workflows/novamart-ci.yml` (en la raíz del repo):
+`.github/workflows/ci.yml`:
 
 1. `lint` — ruff.
 2. `unit-tests` — pytest con Spark + Delta locales.

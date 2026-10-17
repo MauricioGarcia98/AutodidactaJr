@@ -41,6 +41,77 @@ GH = "github-actions"
 PROC = "data-processing"
 
 
+
+# =============================================================================
+# 00 · Proceso completo (hero animado del README)
+# =============================================================================
+def proceso_completo() -> Scene:
+    s = Scene(seed=101)
+    s.text(1200, 0, "NovaMart Lakehouse · el proceso completo", size=46, anchor="n")
+    s.text(1200, 62, "de datos crudos a decisiones de negocio, en Databricks, con cientos de millones de filas",
+           size=21, anchor="n", font=NORMAL, color="#495057")
+    stages = [
+        ("1", "Generar", "datos sintéticos a escala", CYAN, PROC, "Data collection",
+         "8 fuentes · scale factor\n12M pedidos · 150M eventos\nduplicados, nulos, drift", "PySpark distribuido"),
+        ("2", "Aterrizar", "zona landing", GRAY, PROC, "Data storage",
+         "UC Volume\nCSV · JSON.gz · Parquet\nuna carpeta por día", "Unity Catalog"),
+        ("3", "Bronze", "ingesta incremental", BRONZE, DB, "Streaming",
+         "Auto Loader\nschema evolution\nlinaje por archivo", "Delta Lake"),
+        ("4", "Silver", "limpiar y validar", SILVER, PROC, "Data cleansing/transformation",
+         "tipado + deduplicación\nreglas + cuarentena\nSCD Tipo 2 con MERGE", "Spark + MERGE"),
+        ("5", "Gold", "modelar el negocio", GOLD, DB, "Lakehouse",
+         "estrella Kimball\n6 dims · 5 facts\njoins point-in-time", "Liquid clustering"),
+        ("6", "Consumir", "decidir con datos", GREEN, DB, "Dashboards",
+         "AI/BI dashboards\nGenie · Databricks SQL\nRFM · cohortes · embudo", "Databricks SQL"),
+    ]
+    cards = []
+    for i, (num, title, sub, color, lib, ic, bullets, tech) in enumerate(stages):
+        s.step = i + 1
+        x, y, w, h = 30 + i * 395, 150, 340, 460
+        card = s.rect(x, y, w, h, color, fill="hachure", stroke_width=3)
+        s.rect(x + 12, y + 12, w - 24, h - 24, (color[0], "#ffffff"), fill="solid", stroke_width=1)
+        s.ellipse(x - 18, y - 22, 64, 64, color, fill="solid", label=num, size=30)
+        ic_box = s.icon(lib, ic, 0, 0, 120)
+        s.move_group(ic_box, x + (w - ic_box["width"]) / 2, y + 40)
+        s.text(x + w / 2, y + 180, title, size=34, anchor="n", color=color[0])
+        s.text(x + w / 2, y + 225, sub, size=17, anchor="n", font=NORMAL, color="#495057")
+        s.text(x + w / 2, y + 268, bullets, size=18, anchor="n", align="center")
+        b = s.badge(0, 0, tech, color, size=15)
+        bw = b["width"]
+        b["x"], b["y"] = x + (w - bw) / 2, y + h - 62
+        for e in s.elements:
+            if e.get("containerId") == b["id"]:
+                e["x"], e["y"] = b["x"] + 8, b["y"] + 4
+        if cards:
+            s.arrow(cards[-1], card, color=color[0], width=4)
+        cards.append(card)
+    s.step = 7
+    s.line([(60, 660), (2340, 660)], color="#adb5bd", width=2, dashed=True)
+    s.text(1200, 668, "a lo largo de todo el pipeline", size=18, anchor="n", font=NORMAL, color="#868e96")
+    cross = [
+        (ORANGE, DB, "Lakeflow Jobs", "Orquestación", "for_each · condition · run_job\nquality gate bloqueante"),
+        (RED, IT, "Firewall", "Calidad de datos", "contratos · cuarentena\nmétricas por regla y lote"),
+        (VIOLET, DB, "Unity Catalog", "Gobierno", "linaje · PK/FK · tags PII\nmáscaras y row filters"),
+        (BLUE, GH, "GitHub Actions", "CI/CD", "ruff · pytest · e2e local\nAsset Bundles dev/prod"),
+        (TEAL, DB, "Notebooks", "Aprendizaje", "18 módulos SQL → Spark\n→ modelado → producción"),
+    ]
+    for k, (color, lib, ic, title, desc) in enumerate(cross):
+        x = 30 + k * 475
+        s.rect(x, 705, 445, 130, color, fill="solid")
+        ic_box = s.icon(lib, ic, 0, 0, 70)
+        s.move_group(ic_box, x + 16, 705 + (130 - ic_box["height"]) / 2)
+        s.text(x + 104, 720, title, size=24, color=color[0])
+        s.text(x + 104, 760, desc, size=16, font=NORMAL, color="#343a40")
+    s.step = 8
+    stats = [("350M+", "filas con SF=1", CYAN), ("8 → 33", "fuentes → tablas", BRONZE), ("4", "tipos de facts", GOLD),
+             ("18", "módulos", TEAL), ("13", "tests", BLUE), ("1", "comando para desplegar", VIOLET)]
+    for k, (big, small, color) in enumerate(stats):
+        x = 30 + k * 395
+        s.rect(x, 870, 340, 120, color, fill="solid", stroke_width=2)
+        s.text(x + 170, 878, big, size=46, anchor="n", color=color[0])
+        s.text(x + 170, 945, small, size=19, anchor="n", font=NORMAL, color="#343a40")
+    return s
+
 # =============================================================================
 # 01 · Arquitectura end-to-end
 # =============================================================================
@@ -477,7 +548,7 @@ def cicd() -> Scene:
     gh = s.icon_card(GH, "GitHub", 270, 120, 190, 190, GRAY, "GitHub", "push · pull request", icon_size=80)
     s.arrow(dev, gh, label="git push")
     s.step = 3
-    s.zone(520, 80, 820, 300, "GitHub Actions · novamart-ci.yml", BLUE, fill="hachure", icon=(GH, "GitHub Actions", 40))
+    s.zone(520, 80, 820, 300, "GitHub Actions · ci.yml", BLUE, fill="hachure", icon=(GH, "GitHub Actions", 40))
     stages = [("lint", "ruff", IT, "Yes"), ("unit tests", "pytest · Spark\n+ Delta local", DP, "Spark"),
               ("integration", "pipeline e2e\nlanding->gold", DP, "Delta Lake"), ("validate", "databricks bundle", DB, "Databricks")]
     prev = gh
@@ -550,6 +621,7 @@ def ruta_aprendizaje() -> Scene:
 
 
 DIAGRAMS = {
+    "00_proceso_completo": proceso_completo,
     "01_arquitectura": arquitectura,
     "02_linaje_tablas": flujo_tablas,
     "03_modelo_estrella": modelo_estrella,

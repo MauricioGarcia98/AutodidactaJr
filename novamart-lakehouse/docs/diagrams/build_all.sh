@@ -10,10 +10,12 @@ python3 src/build_diagrams.py
 args=()
 for f in *.excalidraw; do args+=("$f" "${f%.excalidraw}"); done
 node src/render.mjs "${args[@]}"
-python3 src/build_animation.py 01_arquitectura 02_linaje_tablas 09_ruta_aprendizaje
+python3 src/build_animation.py 00_proceso_completo 01_arquitectura 02_linaje_tablas 09_ruta_aprendizaje
 for n in 01_arquitectura 09_ruta_aprendizaje; do
   tmp="$(mktemp -d)"
   node src/render_frames.mjs "$n.excalidraw" "$tmp" 1400
   python3 src/make_gif.py "$tmp" "../animations/$n.gif"
   rm -rf "$tmp"
 done
+# hero del README: SVG animado (sin JavaScript, funciona en GitHub)
+node src/render_animated_svg.mjs 00_proceso_completo.excalidraw ../animations/proceso_completo.svg

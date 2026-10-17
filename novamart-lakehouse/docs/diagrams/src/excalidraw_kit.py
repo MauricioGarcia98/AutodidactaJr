@@ -343,7 +343,7 @@ class Scene:
     # ---------------------------------------------------------------- output
     def save(self, path: str | Path) -> None:
         doc = {
-            "type": "excalidraw", "version": 2, "source": "https://github.com/MauricioGarcia98/AutodidactaJr",
+            "type": "excalidraw", "version": 2, "source": "https://github.com/MauricioGarcia98/novamart-lakehouse",
             "elements": self.elements,
             "appState": {"viewBackgroundColor": self.background, "gridSize": 20},
             "files": {},
