@@ -17,10 +17,21 @@ Actualmente estoy desarrollando proyectos prácticos orientados a datos, automat
 - SSIS
 - Python
 - Microsoft Excel
+- Databricks · Apache Spark · Delta Lake
 
 ---
 
 ## 📂 Proyectos
+
+### 🛒 [NovaMart Lakehouse](novamart-lakehouse/) — Databricks · Spark · SQL · modelado de datos
+Pipeline end-to-end en Databricks con cientos de millones de filas sintéticas: Auto Loader, arquitectura
+medallion, SCD Tipo 2 con MERGE, modelo estrella Kimball, marts en SQL, calidad de datos, Lakeflow Jobs,
+Declarative Pipelines, Asset Bundles y CI/CD. Incluye una ruta de aprendizaje de 18 módulos (SQL → Spark →
+Delta → streaming → modelado → producción) y diagramas Excalidraw animados.
+
+**Tecnologías:** Databricks · Apache Spark · SQL · Delta Lake · Unity Catalog · Python · GitHub Actions
+
+![NovaMart](novamart-lakehouse/docs/animations/01_arquitectura.gif)
 
 ### 🔄 ETL Monitoring System
 Proyecto de monitoreo y análisis de ejecuciones de procesos ETL.
